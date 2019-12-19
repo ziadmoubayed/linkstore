@@ -4,6 +4,7 @@ import com.github.newswhip.linkstore.model.DomainVOReport;
 import com.github.newswhip.linkstore.model.LinkVO;
 import com.github.newswhip.linkstore.repo.LinkVORepository;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,11 @@ public class InMemoryLinkScoreRepo implements LinkVORepository {
     @Override
     public void removeLink(LinkVO linkVO) {
         store.remove(linkVO);
+    }
+
+    @Override
+    public Collection<LinkVO> getLinks() {
+        return store;
     }
 
     @Override
