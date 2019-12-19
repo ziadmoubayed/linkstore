@@ -1,5 +1,7 @@
 package com.github.newswhip.linkstore.model;
 
+import com.github.newswhip.linkstore.common.UrlUtils;
+
 import java.util.Objects;
 
 public class LinkVO {
@@ -8,13 +10,15 @@ public class LinkVO {
     private String domain;
     private Long score;
 
-    public LinkVO() {
+    public LinkVO(String url) {
+        this.url = url;
+        this.domain = UrlUtils.getDomain(url);
     }
 
-    public LinkVO(String url, String domain, Long score) {
+    public LinkVO(String url, Long score) {
         this.url = url;
-        this.domain = domain;
         this.score = score;
+        this.domain = UrlUtils.getDomain(url);
     }
 
     public String getUrl() {
@@ -27,10 +31,6 @@ public class LinkVO {
 
     public String getDomain() {
         return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
     }
 
     public Long getScore() {

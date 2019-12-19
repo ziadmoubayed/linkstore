@@ -1,15 +1,12 @@
 import com.github.newswhip.linkstore.common.UrlUtils;
 import org.junit.Test;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-
 import static org.junit.Assert.assertEquals;
 
 public class TestUrlUtils {
 
-    final String GOOD_URL = "http://www.google.com";
-    final String CORRUPTED_URL = "http://google&123123%~`131123```";
+    private final String GOOD_URL = "http://www.google.com";
+    private final String CORRUPTED_URL = "http://google&123123%~`131123```";
 
     @Test
     public void shouldReturnDomainOfUrl() {

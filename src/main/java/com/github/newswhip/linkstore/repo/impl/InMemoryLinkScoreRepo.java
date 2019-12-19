@@ -1,12 +1,11 @@
 package com.github.newswhip.linkstore.repo.impl;
 
-import com.github.newswhip.linkstore.model.DomainVOReport;
 import com.github.newswhip.linkstore.model.LinkVO;
 import com.github.newswhip.linkstore.repo.LinkVORepository;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class InMemoryLinkScoreRepo implements LinkVORepository {
 
@@ -23,12 +22,12 @@ public class InMemoryLinkScoreRepo implements LinkVORepository {
     }
 
     @Override
-    public Collection<LinkVO> getLinks() {
-        return store;
+    public Stream<LinkVO> getLinks() {
+        return store.stream();
     }
 
     @Override
-    public DomainVOReport exportLinkDomainStats() {
-        return null;
+    public void deleteAll() {
+        this.store.clear();
     }
 }
