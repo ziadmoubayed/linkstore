@@ -3,6 +3,7 @@ package com.github.newswhip.linkstore.model;
 import java.util.Objects;
 
 public class LinkVO {
+
     private String url;
     private String domain;
     private Long score;

@@ -1,6 +1,6 @@
 package com.github.newswhip.linkstore.repo.impl;
 
-import com.github.newswhip.linkstore.model.LinkDomainStats;
+import com.github.newswhip.linkstore.model.DomainVOReport;
 import com.github.newswhip.linkstore.model.LinkVO;
 import com.github.newswhip.linkstore.repo.LinkVORepository;
 
@@ -22,7 +22,7 @@ public class InMemoryLinkScoreRepo implements LinkVORepository {
     }
 
     @Override
-    public LinkDomainStats exportLinkDomainStats() {
+    public DomainVOReport exportLinkDomainStats() {
         return null;
     }
 }

@@ -5,7 +5,6 @@ import com.github.newswhip.linkstore.model.LinkVO;
 import com.github.newswhip.linkstore.repo.LinkVORepository;
 import com.github.newswhip.linkstore.repo.impl.InMemoryLinkScoreRepo;
 
-import java.net.MalformedURLException;
 
 public enum LinkScoreService {
 

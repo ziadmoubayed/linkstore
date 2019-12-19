@@ -9,8 +9,8 @@ import java.util.concurrent.Callable;
  * Example:
  * 	add --url=http://link.com/123 --score=50
  */
-@CommandLine.Command(name="add", description = "add a URL with an associated social score")
-class Add  implements Callable<Void> {
+@CommandLine.Command(name = "add", description = "add a URL with an associated social score")
+class Add implements Callable<Void> {
     @CommandLine.Option(names = "--url", required = true, description = "the url to import")
     String link;
 
@@ -18,22 +18,20 @@ class Add  implements Callable<Void> {
     Long score;
 
     @Override
-    public Void call() throws Exception {
+    public Void call() {
         return null;
     }
 }
 
 
-    public class LinkStoreCli implements Callable<Void> {
+public class LinkStoreCli implements Callable<Void> {
 
-    public static void main(String[] args) throws Exception {
-        CommandLine commandLine = new CommandLine(new LinkStoreCli());
-        commandLine.parseWithHandler(new CommandLine.RunLast(), args);
+    public static void main(String[] args) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Void call() {
-        CommandLine.usage(this, System.err);
         return null;
     }
 }
