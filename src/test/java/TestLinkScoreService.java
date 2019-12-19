@@ -1,14 +1,11 @@
 import com.github.newswhip.linkstore.common.UrlUtils;
 import com.github.newswhip.linkstore.service.LinkScoreService;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 public class TestLinkScoreService {
 
@@ -40,5 +37,13 @@ public class TestLinkScoreService {
         Arrays.stream(SAME_DOMAINS).forEach(domain -> LinkScoreService.INSTANCE.addLink(domain, RANDOM_SCORE));
         var report = LinkScoreService.INSTANCE.getDomainStats();
         assertEquals(Long.valueOf(RANDOM_SCORE * SAME_DOMAINS.length), report.get(UrlUtils.getDomain(SAME_DOMAINS[0])));
+    }
+
+    @Test
+    public void reportShouldContainEntryForEveryDifferentDomain() {
+        LinkScoreService.INSTANCE.flushStore();
+        Arrays.stream(DIFFERENT_DOMAINS).forEach(domain -> LinkScoreService.INSTANCE.addLink(domain, RANDOM_SCORE));
+        var report = LinkScoreService.INSTANCE.getDomainStats();
+        assertEquals(report.size(), DIFFERENT_DOMAINS.length);
     }
 }
