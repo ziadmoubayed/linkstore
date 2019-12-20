@@ -7,7 +7,6 @@ public enum Mapper {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     Mapper(){
-        // TODO add configuration on the ObjectMapper here.
     }
 
     public ObjectMapper getObjectMapper() {

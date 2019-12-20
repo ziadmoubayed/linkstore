@@ -4,6 +4,7 @@ import com.github.newswhip.linkstore.model.LinkVO;
 import com.github.newswhip.linkstore.repo.LinkVORepository;
 import com.github.newswhip.linkstore.repo.impl.InMemoryLinkScoreRepo;
 
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,9 @@ public enum LinkScoreService {
         this.linkVORepository.deleteAll();
     }
 
-    public Map<String, Long> getDomainStats() {
-        return this.linkVORepository.getLinks()
-                .collect(Collectors.groupingBy(LinkVO::getDomain, Collectors.summingLong(LinkVO::getScore)));
+    public Map<String, AbstractMap.SimpleEntry<Integer, Long>> getDomainStats() {
+        return this.linkVORepository.getLinks().collect(Collectors.toMap(LinkVO::getDomain,
+                linkVO -> new AbstractMap.SimpleEntry<>(1, linkVO.getScore()),
+                (existing, conflict) -> existing = new AbstractMap.SimpleEntry<>(existing.getKey() + 1, existing.getValue() + conflict.getValue())));
     }
 }
