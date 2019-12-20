@@ -16,12 +16,26 @@ import java.util.Scanner;
         })
 public class LinkStore implements Runnable {
 
+    private static boolean keepRunning = Boolean.TRUE;
+
+    static {
+        final Thread mainThread = Thread.currentThread();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            keepRunning = Boolean.FALSE;
+            try {
+                mainThread.join();
+            } catch (InterruptedException ignored) {
+                Thread.currentThread().interrupt();
+            }
+        }));
+    }
+
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in).useDelimiter("\n");						// So that prompt shows once each time
+        Scanner input = new Scanner(System.in).useDelimiter("\n");                        // So that prompt shows once each time
         new CommandLine(new LinkStore()).execute("--help".split(" "));
         String shPrompt = "cli> ";
         System.out.print(shPrompt);
-        while (true) {
+        while (keepRunning) {
             if (input.hasNext()) {
                 String cmd = input.next();
                 new CommandLine(new LinkStore()).execute(cmd.split(" "));
@@ -35,4 +49,3 @@ public class LinkStore implements Runnable {
         // your business logic goes here...
     }
 }
-
