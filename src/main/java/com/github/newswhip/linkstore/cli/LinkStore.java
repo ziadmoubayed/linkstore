@@ -19,10 +19,7 @@ public class LinkStore implements Runnable {
     private static boolean keepRunning = Boolean.TRUE;
 
     static {
-        final Thread mainThread = Thread.currentThread();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            keepRunning = Boolean.FALSE;
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> keepRunning = Boolean.FALSE));
     }
 
     public static void main(String[] args) {
