@@ -22,11 +22,6 @@ public class LinkStore implements Runnable {
         final Thread mainThread = Thread.currentThread();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             keepRunning = Boolean.FALSE;
-            try {
-                mainThread.join();
-            } catch (InterruptedException ignored) {
-                Thread.currentThread().interrupt();
-            }
         }));
     }
 
