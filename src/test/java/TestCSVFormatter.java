@@ -1,4 +1,3 @@
-import com.github.newswhip.linkstore.common.CommonUtils;
 import com.github.newswhip.linkstore.common.Constants;
 import com.github.newswhip.linkstore.service.LinkScoreService;
 import com.github.newswhip.linkstore.service.impl.CSVReportFormatter;
@@ -14,6 +13,6 @@ public class TestCSVFormatter {
         var report = LinkScoreService.INSTANCE.getDomainStats();
         var formattedLines = new CSVReportFormatter().formatReport(report);
         assertTrue(formattedLines.size() > 0);
-        assertEquals(formattedLines.get(0), Constants.CSV_HEADERS);
+        assertEquals(Constants.CSV_HEADERS, formattedLines.get(0));
     }
 }
