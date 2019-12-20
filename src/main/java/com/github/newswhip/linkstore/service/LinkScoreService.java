@@ -8,7 +8,9 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+/**
+ *
+ */
 public enum LinkScoreService {
 
     INSTANCE;
@@ -22,7 +24,7 @@ public enum LinkScoreService {
     public void addLink(String url, Long score) {
         if (score < 0)
             throw new IllegalArgumentException("Invalid score. It should be a whole number, greater or equal to zero");
-        this.linkVORepository.addLinkWithScore(new LinkVO(url, score));
+        this.linkVORepository.addLink(new LinkVO(url, score));
     }
 
     public void removeLink(String url) {
