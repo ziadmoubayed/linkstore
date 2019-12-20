@@ -1,4 +1,4 @@
-import com.github.newswhip.linkstore.common.UrlUtils;
+import com.github.newswhip.linkstore.common.CommonUtils;
 import com.github.newswhip.linkstore.service.LinkScoreService;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +26,7 @@ public class TestLinkScoreService {
         Arrays.stream(SAME_DOMAINS).forEach(domain -> LinkScoreService.INSTANCE.addLink(domain, RANDOM_SCORE));
         LinkScoreService.INSTANCE.removeLink(SAME_DOMAINS[0]);
         var report = LinkScoreService.INSTANCE.getDomainStats();
-        System.out.println(Long.valueOf(RANDOM_SCORE * (SAME_DOMAINS.length - 1)));
-        System.out.println(report);
-        assertEquals(Long.valueOf(RANDOM_SCORE * (SAME_DOMAINS.length - 1)), report.get(UrlUtils.getDomain(SAME_DOMAINS[0])));
+        assertEquals(Long.valueOf(RANDOM_SCORE * (SAME_DOMAINS.length - 1)), report.get(CommonUtils.getDomain(SAME_DOMAINS[0])).getValue());
     }
 
     @Test
@@ -36,7 +34,7 @@ public class TestLinkScoreService {
         LinkScoreService.INSTANCE.flushStore();
         Arrays.stream(SAME_DOMAINS).forEach(domain -> LinkScoreService.INSTANCE.addLink(domain, RANDOM_SCORE));
         var report = LinkScoreService.INSTANCE.getDomainStats();
-        assertEquals(Long.valueOf(RANDOM_SCORE * SAME_DOMAINS.length), report.get(UrlUtils.getDomain(SAME_DOMAINS[0])));
+        assertEquals(Long.valueOf(RANDOM_SCORE * SAME_DOMAINS.length), report.get(CommonUtils.getDomain(SAME_DOMAINS[0])).getValue());
     }
 
     @Test
@@ -45,5 +43,11 @@ public class TestLinkScoreService {
         Arrays.stream(DIFFERENT_DOMAINS).forEach(domain -> LinkScoreService.INSTANCE.addLink(domain, RANDOM_SCORE));
         var report = LinkScoreService.INSTANCE.getDomainStats();
         assertEquals(report.size(), DIFFERENT_DOMAINS.length);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThroughIllegalArgumentExceptionIfScoreIsNegative() {
+        LinkScoreService.INSTANCE.addLink(null, -1L);
     }
 }

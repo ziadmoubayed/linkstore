@@ -12,7 +12,7 @@ public class InMemoryLinkScoreRepo implements LinkVORepository {
     private Set<LinkVO> store = new HashSet<>();
 
     @Override
-    public void addLinkWithScore(LinkVO linkVO) {
+    public void addLink(LinkVO linkVO) {
         store.add(linkVO);
     }
 

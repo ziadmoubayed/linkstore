@@ -27,16 +27,16 @@ public class TestInMemoryRepo {
     @Test
     public void shouldIncreaseInSizeWhenAdding() {
         assertEquals(0, linkVORepository.getLinks().count());
-        linkVORepository.addLinkWithScore(DEMO1);
+        linkVORepository.addLink(DEMO1);
         assertEquals(1, linkVORepository.getLinks().count());
-        linkVORepository.addLinkWithScore(DEMO2);
+        linkVORepository.addLink(DEMO2);
         assertEquals(2, linkVORepository.getLinks().count());
     }
 
     @Test
     public void shouldDecreaseInSizeWhenRemoving() {
-        linkVORepository.addLinkWithScore(DEMO1);
-        linkVORepository.addLinkWithScore(DEMO2);
+        linkVORepository.addLink(DEMO1);
+        linkVORepository.addLink(DEMO2);
         assertEquals(2, linkVORepository.getLinks().count());
         linkVORepository.removeLink(DEMO2);
         assertEquals(1, linkVORepository.getLinks().count());
@@ -46,8 +46,8 @@ public class TestInMemoryRepo {
 
     @Test
     public void duplicatesShouldBeOverriden() {
-        linkVORepository.addLinkWithScore(DEMO1);
-        linkVORepository.addLinkWithScore(DEMO1);
+        linkVORepository.addLink(DEMO1);
+        linkVORepository.addLink(DEMO1);
         assertThat(linkVORepository.getLinks().collect(Collectors.toSet()), contains(DEMO1));
         assertThat(linkVORepository.getLinks().count(), equalTo(1L));
     }
