@@ -6,20 +6,19 @@ import java.net.URI;
 /**
  * Utility class for urls
  */
-public class UrlUtils {
-
+public class CommonUtils {
 
     /**
      * Hiding constructor
      */
-    UrlUtils() {
+    CommonUtils() {
     }
 
     /**
      * Returns the domain from the url
      *
-     * @param urlString
-     * @return
+     * @param urlString string url
+     * @return domain name without http:// and www.
      */
     public static String getDomain(String urlString) {
         if (!(urlString.startsWith("http://") || urlString.startsWith("https://"))) {
