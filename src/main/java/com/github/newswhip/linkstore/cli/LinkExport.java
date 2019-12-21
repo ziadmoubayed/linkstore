@@ -1,8 +1,7 @@
 package com.github.newswhip.linkstore.cli;
 
-import com.github.newswhip.linkstore.service.LinkScoreService;
-import com.github.newswhip.linkstore.service.ReportFormatter;
-import com.github.newswhip.linkstore.service.impl.CSVReportFormatter;
+import com.github.newswhip.linkstore.service.reports.ReportGenerator;
+import com.github.newswhip.linkstore.service.reports.impl.CSVDomainReportGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -11,8 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.AbstractMap;
-import java.util.Map;
+import java.util.Collection;
 
 @CommandLine.Command(name = "export", header = "Export a report.")
 public class LinkExport implements Runnable {
@@ -22,26 +20,51 @@ public class LinkExport implements Runnable {
     @CommandLine.Option(names = {"-f", "--file"}, description = "/tmp/export.csv")
     private File dest;
 
+
+    private final ReportGenerator reportGenerator;
+
+    public LinkExport() {
+        this.reportGenerator = new CSVDomainReportGenerator();
+    }
+
+
     @Override
     public void run() {
-        var report = LinkScoreService.INSTANCE.getDomainStats();
+        //Generates the report
+        var report = this.reportGenerator.getReport();
+        /**
+         * If destination file not specified.
+         * Print to output stream.
+         */
         if (dest == null) {
-            print(report, new CSVReportFormatter());
+            print(report);
             return;
         }
         try {
-            write(report, dest, new CSVReportFormatter());
+            write(report, dest);
         } catch (IOException e) {
             logger.error("Error writing report to: " + dest, e);
         }
     }
 
-    private void print(Map<String, AbstractMap.SimpleEntry<Integer, Long>> report, ReportFormatter reportFormatter) {
-        reportFormatter.formatReport(report).forEach(System.out::println);
+    /**
+     * Prints the formatted line collection, line by line.
+     *
+     * @param formattedReport report formatted and ready for print
+     */
+    private void print(Collection<String> formattedReport) {
+        formattedReport.forEach(System.out::println);
     }
 
-    private void write(Map<String, AbstractMap.SimpleEntry<Integer, Long>> report, File dest, ReportFormatter reportFormatter) throws IOException {
-        var lines = reportFormatter.formatReport(report);
-        Files.write(dest.toPath(), lines, StandardOpenOption.CREATE_NEW);
+    /**
+     * Writes the lines to the destination file.
+     * Fails If File already exists or directory does not exist.
+     *
+     * @param formattedReport report formatted and ready for write
+     * @param dest destination file
+     * @throws IOException if writing fails
+     */
+    private void write(Collection<String> formattedReport, File dest) throws IOException {
+        Files.write(dest.toPath(), formattedReport, StandardOpenOption.CREATE_NEW);
     }
 }

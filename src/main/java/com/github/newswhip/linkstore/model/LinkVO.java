@@ -4,6 +4,9 @@ import com.github.newswhip.linkstore.common.CommonUtils;
 
 import java.util.Objects;
 
+/**
+ * Link value object
+ */
 public class LinkVO {
 
     private String url;

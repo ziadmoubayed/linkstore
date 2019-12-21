@@ -7,6 +7,6 @@ public class TestMapper {
 
     @Test
     public void mapperShouldNotBeNull() {
-        assertNotNull(Mapper.INSTANCE.getObjectMapper());
+        assertNotNull(Mapper.INSTANCE.getMapper());
     }
 }

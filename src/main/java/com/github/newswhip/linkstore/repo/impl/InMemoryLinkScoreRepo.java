@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Data Repository. Putting the links in memory and streaming the results when needed.
+ */
 public class InMemoryLinkScoreRepo implements LinkVORepository {
 
     private Set<LinkVO> store = new HashSet<>();
